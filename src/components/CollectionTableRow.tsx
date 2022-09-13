@@ -12,7 +12,7 @@ function CollectionTableRow({ collection, index }: { collection: IPool; index: n
       onClick={() => navigate(`/collection/${collection.pool_id}`)}
     >
       <td>
-        <span className="text-bold">{collection.nft_token}</span>
+        <span className="font-semibold font-poppins">{collection.nft_token}</span>
       </td>
       <td className="text-center">{collection.pool_token_ids.length}</td>
       <td>

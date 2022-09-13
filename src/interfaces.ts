@@ -32,4 +32,5 @@ export interface IPool {
   pool_token_ids: []
   pool_type: number
   spot_price: string
+  poolTokenMetadata: {}
 }

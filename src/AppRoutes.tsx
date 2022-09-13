@@ -6,6 +6,7 @@ import { useWalletSelector } from './contexts/WalletSelectorContext'
 
 import Content from './components/Content'
 import Homepage from './pages/Homepage'
+// @ts-ignore
 import YourNFTs from './pages/YourNFTs'
 import DetailNFT from './pages/DetailNFT'
 
@@ -278,7 +279,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/create" element={<CreatePool />} />
         <Route path="/content" element={<Content />} />
         <Route path="/nft-details/:id" element={<DetailNFT account={account} nft={listNFT[1]} isLoading={loading} />} />
-        <Route path="/inventory" element={<YourNFTs account={account} isLoading={loading} />} />
+        <Route path="/inventory" element={<YourNFTs account={accountId} />} />
       </Routes>
     </BrowserRouter>
   )

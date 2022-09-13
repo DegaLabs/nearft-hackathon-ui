@@ -15,7 +15,6 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
 
   const [collection, setCollection] = useState<IPool | undefined>()
   const [nfts, setNFTs] = useState([])
-  const [nftsCopy, setNftsCopy] = useState([])
   const [isLoading, setLoading] = useState<boolean>(true)
   const params = useParams()
 
@@ -39,7 +38,7 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
   return (
     <div className="w-full flex justify-start items-center flex-col min-h-screen">
       <div className="w-full flexCenter flex-col">
-        <Banner name={'Your Nifty NFTs'} childStyles="text-center mb-4 text-white" parentStyles="h-80 justify-center" />
+        <Banner name={collection?.nft_token} childStyles="text-center mb-4 text-white" parentStyles="h-80 justify-center" />
 
         <div className="flexCenter flex-col -mt-20 z-0">
           <div className="flexCenter w-40 h-40 sm:w-36 sm:h-36 p-1 bg-nft-black-2 rounded-full">
@@ -55,7 +54,7 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
         </div>
       </div>
 
-      {!isLoading && !nfts.length && !nftsCopy.length ? (
+      {!isLoading && !nfts.length ? (
         <div className="flexCenter sm:p-4 p-16">
           <h1
             className="font-poppins dark:text-white text-nft-black-1
