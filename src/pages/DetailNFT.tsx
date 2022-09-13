@@ -1,17 +1,46 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
+import { useParams } from 'react-router-dom'
+
+// @ts-ignore
+import NearFTSDK from 'nearft-sdk'
 import Button from '../components/Button'
 import nftPlaceholder from '../assets/nft1.png'
 import Loader from '../components/Loader'
-import { IAccount, INFTMetadata } from '../interfaces'
+import { IAccount } from '../interfaces'
 import { Col, Container, Row } from 'react-bootstrap'
 
 interface IDetailNFTProps {
   account: IAccount | null
-  nft: INFTMetadata
-  isLoading: boolean
 }
 
-const DetailNFT: React.FC<IDetailNFTProps> = ({ account, nft, isLoading }) => {
+const DetailNFT: React.FC<IDetailNFTProps> = ({ account}) => {
+
+  const [nft, setNFT] = useState<any>()
+  const [isLoading, setLoading] = useState<boolean>(true)
+
+  const { id } = useParams()
+
+  console.log('id', id)
+  console.log('nft list', nft)
+
+  useEffect(() => {
+    const getListNFTs = async () => {
+      if (account) {
+        const _listNFTs = await NearFTSDK.getNFTData('testnet', account, 'nearftamm.testnet')
+        // @ts-ignore
+        const list = []
+        // @ts-ignore
+        _listNFTs.forEach((e) => list.push(...e))
+        // @ts-ignore
+        setNFT(list)
+        // @ts-ignore
+        console.log('nft', nft[id])
+        setLoading(false)
+      }
+    }
+    getListNFTs()
+  }, [account])
+
   if (isLoading) return <Loader />
 
   return (
@@ -20,7 +49,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, nft, isLoading }) => {
         <Row className="mt-10 lg:mt-20 mb-10 lg:mb-20">
           <Col sm={5} lg={6}>
             <div className="text-center mb-5">
-              <img src={nftPlaceholder} className="rounded-xl shadow-lg" alt={nft.name} />
+              <img src={nftPlaceholder} className="rounded-xl shadow-lg" alt={nft?.name} />
             </div>
           </Col>
           <Col sm={5} lg={6}>
@@ -28,7 +57,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, nft, isLoading }) => {
               className="font-poppins dark:text-white text-nft-black-1 font-semibold
           text-2xl minlg:text-3xl"
             >
-              {nft.name}
+              {nft?.name}
             </h2>
             <div className="mt-10">
               <p
@@ -39,13 +68,13 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, nft, isLoading }) => {
               </p>
               <div className="flex flex-row items-center mt-3">
                 <div className="relative w-12 h-12 minlg:w-20 minlg:h-20 mr-2">
-                  <img src={nftPlaceholder} className="rounded-full" alt={nft.seller} />
+                  <img src={nftPlaceholder} className="rounded-full" alt={nft?.seller} />
                 </div>
                 <p
                   className="font-poppins dark:text-white text-nft-black-1 text-xs minlg:text-base
               font-semibold"
                 >
-                  {nft.seller}
+                  {nft?.seller}
                 </p>
               </div>
 
@@ -63,20 +92,20 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, nft, isLoading }) => {
                     className="font-poppins dark:text-white text-nft-black-1 text-base
                 font-normal"
                   >
-                    {nft.description}
+                    {nft?.description}
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-row sm:flex-col mt-10">
-                {account?.account_id === nft.seller?.toLowerCase() ? (
+                {account?.account_id === nft?.seller?.toLowerCase() ? (
                   <p
                     className="font-poppins dark:text-white text-nft-black-1 text-base
                 font-normal border border-gray p-2"
                   >
                     You cannot buy your own NFT.
                   </p>
-                ) : account?.account_id === nft.owner?.toLowerCase() ? (
+                ) : account?.account_id === nft?.owner?.toLowerCase() ? (
                   <Button
                     btnName="List on Marketplace"
                     classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
@@ -84,7 +113,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, nft, isLoading }) => {
                   />
                 ) : (
                   <Button
-                    btnName={`Buy for ${nft.price}`}
+                    btnName={`Buy for ${nft?.price}`}
                     classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
                     handleClick={() => console.log('Buy')}
                   />

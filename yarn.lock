@@ -6275,7 +6275,7 @@ near-api-js@^1.0.0:
 
 "nearft-sdk@github:DegaLabs/nearft-sdk":
   version "1.0.0"
-  resolved "git+ssh://git@github.com/DegaLabs/nearft-sdk.git#7e61e29041dcb50a1c31058adbe47777fdb6371c"
+  resolved "git+ssh://git@github.com/DegaLabs/nearft-sdk.git#dfb84d4bea42505f665779ec8a87e214561cdf61"
   dependencies:
     axios "^0.27.2"
     bignumber.js "^9.1.0"

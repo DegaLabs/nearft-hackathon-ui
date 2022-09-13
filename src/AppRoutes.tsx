@@ -222,6 +222,7 @@ const AppRoutes: React.FC = () => {
   useEffect(() => {
     const getCollections = async () => {
       const _collections = await NearFTSDK.getPools('testnet', CONTRACT_ID)
+      console.log('_collections', _collections)
       setCollections(_collections)
     }
     getCollections()
@@ -279,8 +280,8 @@ const AppRoutes: React.FC = () => {
         <Route path="/pool" element={<YourPools collections={collections} />} />
         <Route path="/create" element={<CreatePool />} />
         <Route path="/content" element={<Content />} />
-        <Route path="/nft-details/:id" element={<DetailNFT account={account} nft={listNFT[1]} isLoading={loading} />} />
         <Route path="/inventory" element={<YourNFTs account={accountId} />} />
+        <Route path="/inventory/:id" element={<DetailNFT account={account} />} />
       </Routes>
     </BrowserRouter>
   )
