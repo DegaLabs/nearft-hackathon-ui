@@ -7,6 +7,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { useWalletSelector } from '../contexts/WalletSelectorContext'
 import { toNear } from '../utils/amount'
 import Select from 'react-select'
+import { CONTRACT_ID } from '../constants'
 
 interface IFormInput {
   pool_type: string
@@ -43,6 +44,7 @@ const CreatePool = () => {
             .toFixed()
     const _fee = Big(data.fee)
       .times(10 ** 18)
+      .div(100)
       .toFixed()
     const depositAmount = Big(data.deposit_amount)
       .times(10 ** 24)
@@ -59,10 +61,11 @@ const CreatePool = () => {
     await NearFTSDK.createPair(
       selector,
       'testnet',
+      CONTRACT_ID,
       data.asset_id,
       accountId,
-      data.pool_type,
-      data.bonding_curve,
+      Number(data.pool_type),
+      Number(data.bonding_curve),
       spotPrice,
       _delta,
       _fee,
@@ -76,7 +79,7 @@ const CreatePool = () => {
   useEffect(() => {
     const getListCollection = async () => {
       if (accountId) {
-        const _list = await NearFTSDK.getListMyCollection('testnet', accountId)
+        const _list = await NearFTSDK.getListMyCollection('testnet', CONTRACT_ID, accountId)
         setListCollection(_list)
       }
     }
