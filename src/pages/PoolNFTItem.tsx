@@ -92,7 +92,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                 <a
                   className="font-poppins text-nft-black-1 text-sm"
                   href={`https://explorer.testnet.near.org/accounts/${nft?.ownerId}`}
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
                   {trimName(nft?.ownerId, 12, 12, 28)}
                 </a>
@@ -104,7 +104,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                 <a
                   className="font-poppins text-nft-black-1 text-sm"
                   href={`https://explorer.testnet.near.org/accounts/${nft?.contractId}`}
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
                   {trimName(nft?.contractId, 12, 12, 28)}
                 </a>
@@ -139,9 +139,8 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                 ) : (
                   <Button
                     btnName={`Buy for #${nft?.tokenId}`}
-                    classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                    classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl w-full"
                     loading={isBuying}
-                    // handleClick={() => console.log('hehe')}
                     handleClick={() =>
                       onBuy(
                         'testnet',

@@ -6,15 +6,6 @@ const Homepage = () => {
   return (
     <div className="flex justify-center sm:px-4 p-12">
       <Container>
-        <Banner
-          parentStyles="justify-start mb-6 h-72 sm:h-96 p-12 xs:p-4 xs:h-44 rounded-3xl"
-          childStyles="md:text-4xl sm:text-2xl xs:text-xl text-left text-white leading-loose"
-          name={
-            <>
-              the decentralized <br /> NFT marketplace
-            </>
-          }
-        />
         <div className="mt-10">
           <h2 className="font-poppins dark:text-white text-nft-black-1 text-2xl minlg:text-4xl font-semibold sm:mb-4 flex-1">
             Hot NFTs

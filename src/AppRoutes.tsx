@@ -230,25 +230,22 @@ const AppRoutes: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand as={NavLink} to="/" className="mr-5">
             NearFT
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/collections">
-                Collections
-              </Nav.Link>
-            </Nav>
-            <Nav>
+            <Nav className="me-auto ml-5">
               <Nav.Link as={Link} to="/inventory">
                 Your NFTs
               </Nav.Link>
               <Nav.Link as={Link} to="/pool">
                 Your Pools
               </Nav.Link>
+            </Nav>
+            <Nav>
               {account ? (
                 <NavDropdown
                   title={account.account_id}
@@ -269,10 +266,9 @@ const AppRoutes: React.FC = () => {
         </Container>
       </Navbar>
       <Routes>
-        <Route path="/" element={<Homepage />} />
         {/*
         // @ts-ignore */}
-        <Route path="/collections" element={<Collections collections={collections} />} />
+        <Route path="/" element={<Collections collections={collections} />} />
         {/*
         // @ts-ignore */}
         <Route path="/collection/:id" element={<PoolDetail collections={collections} />} />

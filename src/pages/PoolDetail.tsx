@@ -4,7 +4,6 @@ import Loader from '../components/Loader'
 import Banner from '../components/Banner'
 import { IPool } from '../interfaces'
 
-import creatorImg from '../assets/creator1.png'
 import { Container, Row, Col } from 'react-bootstrap'
 import nftPlaceholder from '../assets/nft1.png'
 import { trimName } from '../utils/utils'
@@ -50,14 +49,12 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
           parentStyles="h-80 justify-center"
         />
 
-        <div className="flexCenter flex-col -mt-20 z-0">
-          <div className="flexCenter w-40 h-40 sm:w-36 sm:h-36 p-1 bg-nft-black-2 rounded-full">
-            <img src={creatorImg} className="rounded-full object-cover" alt="" />
-          </div>
+        <div className="flexCenter flex-col -mt-32 z-0">
           <a
             className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl mt-6"
             href={`https://explorer.testnet.near.org/accounts/${collection?.nft_token}`}
             target="_blank"
+            rel="noreferrer"
           >
             {collection?.nft_token}
           </a>
@@ -74,34 +71,35 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
           </h1>
         </div>
       ) : (
-        <Container className="mt-4">
+        <Container className="mt-20">
           <Row>
             {tokenIds?.map((token, i) => (
-              <Col sm={6} lg={4} xl={3} key={i}>
+              <Col sm={6} lg={4} xl={3} key={i} className="mb-4">
                 <Link to={`/collection/${id}/${token}`}>
                   <div className="dark:bg-nft-black-3 bg-white rounded-2xl p-4 sm:my-2 shadow-md">
                     <div className="relative w-full rounded-2xl overflow-hidden">
-                      <img src={nfts[token].icon ? nfts[token].icon : nftPlaceholder} alt="" />
+                      <img src={nfts[token]?.icon ? nfts[token]?.icon : nftPlaceholder} alt="" />
                     </div>
                     <div className="mt-3 flex flex-col">
                       <div className="flex flex-row align-items-center">
                         <a
                           className="font-poppins text-nft-black-1 text-sm"
-                          href={`https://explorer.testnet.near.org/accounts/${nfts[token].contractId}`}
+                          href={`https://explorer.testnet.near.org/accounts/${nfts[token]?.contractId}`}
                           target="_blank"
+                          rel="noreferrer"
                         >
-                          {trimName(nfts[token].contractId, 12, 12, 28)}
+                          {trimName(nfts[token]?.contractId, 12, 10, 24)}
                         </a>
                         <img
                           className="ml-2"
-                          src={nfts[token].nftIcon ? nfts[token].nftIcon : nftPlaceholder}
+                          src={nfts[token]?.nftIcon ? nfts[token]?.nftIcon : nftPlaceholder}
                           style={{ maxWidth: '20px' }}
                           alt=""
                         />
                       </div>
                       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-md mt-2">
-                        <span className="text-nft-gray-2">#{nfts[token].tokenId}</span>{' '}
-                        {nfts[token].metadata.title ? nfts[token].metadata.title : 'No name'}
+                        <span className="text-nft-gray-2">#{nfts[token]?.tokenId}</span>{' '}
+                        {nfts[token]?.metadata.title ? nfts[token]?.metadata.title : 'No name'}
                       </p>
                       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm mt-2">
                         <span className="text-nft-gray-2">

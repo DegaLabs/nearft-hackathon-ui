@@ -82,7 +82,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
       }
     }
     getListNFTs()
-  }, [account, id])
+  }, [nftContract, id, accountId])
 
   if (isLoading) return <Loader />
 
@@ -121,7 +121,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
                 <a
                   className="font-poppins text-nft-black-1 text-sm"
                   href={`https://explorer.testnet.near.org/accounts/${nft?.ownerId}`}
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
                   {trimName(nft?.ownerId, 12, 12, 28)}
                 </a>
@@ -133,7 +133,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
                 <a
                   className="font-poppins text-nft-black-1 text-sm"
                   href={`https://explorer.testnet.near.org/accounts/${nft?.contractId}`}
-                  target="_blank"
+                  target="_blank" rel="noreferrer"
                 >
                   {trimName(nft?.contractId, 12, 12, 28)}
                 </a>
@@ -158,7 +158,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
                 {(account?.account_id === nft?.ownerId || isDeposited) && (
                   <Button
                     btnName={`Sell #${nft?.tokenId}`}
-                    classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                    classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl w-full"
                     loading={isSelling}
                     // handleClick={() => console.log('hehe')}
                     handleClick={() =>

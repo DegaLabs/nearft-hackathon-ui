@@ -3,8 +3,7 @@ import NearFTSDK from 'nearft-sdk'
 import Loader from '../components/Loader'
 import Banner from '../components/Banner'
 
-import creatorImg from '../assets/creator1.png'
-import { Col, Row } from 'react-bootstrap'
+import { Container, Col, Row } from 'react-bootstrap'
 import nftPlaceholder from '../assets/nft1.png'
 import { trimName } from '../utils/utils'
 import { nearTo } from '../utils/amount'
@@ -13,8 +12,6 @@ import { Link } from 'react-router-dom'
 const YourNFTs = ({ account }) => {
   const [nfts, setNFTs] = useState([])
   const [loading, setLoading] = useState(true)
-
-  console.log('nfts', nfts)
 
   useEffect(() => {
     const getListNFTs = async () => {
@@ -49,10 +46,7 @@ const YourNFTs = ({ account }) => {
       <div className="w-full flexCenter flex-col">
         <Banner name={'Your NFTs'} childStyles="text-center mb-4 text-white" parentStyles="h-80 justify-center" />
 
-        <div className="flexCenter flex-col -mt-20 z-0">
-          <div className="flexCenter w-40 h-40 sm:w-36 sm:h-36 p-1 bg-nft-black-2 rounded-full">
-            <img src={creatorImg} className="rounded-full object-cover" alt="" />
-          </div>
+        <div className="flexCenter flex-col -mt-32 z-0">
           <p
             className="font-poppins dark:text-white text-nft-black-1
             font-semibold text-2xl mt-6"
@@ -72,10 +66,10 @@ const YourNFTs = ({ account }) => {
           </h1>
         </div>
       ) : (
-        <div className="p-12 sm:p-4 w-full minmd:w-4/5 flexCenter flex-col">
+        <Container className="mt-20">
           <Row>
             {nfts?.map((e, i) => (
-              <Col sm={6} lg={4} xl={3} key={i}>
+              <Col sm={6} lg={4} xl={3} key={i} className="mb-4">
                 <Link to={`/nft/${e.contractId}/${e.tokenId}`}>
                   <div className="dark:bg-nft-black-3 bg-white rounded-2xl p-4 sm:my-2 shadow-md">
                     <div className="relative w-full rounded-2xl overflow-hidden">
@@ -87,6 +81,7 @@ const YourNFTs = ({ account }) => {
                           className="font-poppins text-nft-black-1 text-sm"
                           href={`https://explorer.testnet.near.org/accounts/${e?.contractId}`}
                           target="_blank"
+                          rel="noreferrer"
                         >
                           {trimName(e?.contractId, 12, 12, 28)}
                         </a>
@@ -105,7 +100,7 @@ const YourNFTs = ({ account }) => {
               </Col>
             ))}
           </Row>
-        </div>
+        </Container>
       )}
     </div>
   )
