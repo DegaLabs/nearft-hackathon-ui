@@ -63,6 +63,24 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                 {}
               </p>
 
+              <div className="flex flex-row align-items-center my-2">
+                {nft?.nftIcon && (
+                  <img
+                    className="mr-2"
+                    src={nft?.nftIcon}
+                    style={{ maxWidth: '20px' }}
+                    alt=""
+                  />
+                )}
+                <a
+                  className="font-poppins text-nft-black-1 text-sm"
+                  href={`https://explorer.testnet.near.org/accounts/${nft?.contractId}`}
+                  target="_blank"
+                >
+                  {trimName(nft?.contractId, 12, 12, 28)}
+                </a>
+              </div>
+
               {nft?.metadata.description && (
                 <div className="mt-3 flex flex-col">
                   <div className="w-full border-b dark:border-nft-black-1 border-nft-gray-1 flex flex-row">
