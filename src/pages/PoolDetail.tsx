@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Loader from '../components/Loader'
 import Banner from '../components/Banner'
 import { IPool } from '../interfaces'
@@ -21,19 +21,17 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
   const [nfts, setNFTs] = useState<any>()
   const [tokenIds, setTokenIds] = useState<string[]>()
   const [isLoading, setLoading] = useState<boolean>(true)
-  const params = useParams()
-
-  console.log('collection', collection)
+  const { id } = useParams()
 
   useEffect(() => {
-    if (collections && params) {
-      const _collection = collections.filter((collection) => collection.pool_id === Number(params.id))
+    if (collections && id) {
+      const _collection = collections.filter((collection) => collection.pool_id === Number(id))
       setCollection(_collection[0])
       setTokenIds(_collection[0].pool_token_ids)
       setNFTs(_collection[0].poolTokenMetadata)
     }
     setLoading(false)
-  }, [params, collections])
+  }, [id, collections])
 
   if (isLoading) {
     return (
@@ -66,7 +64,7 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
         </div>
       </div>
 
-      {!isLoading && !tokenIds?.length && nfts === undefined ? (
+      {!tokenIds?.length && nfts === undefined ? (
         <div className="flexCenter sm:p-4 p-16">
           <h1
             className="font-poppins dark:text-white text-nft-black-1
@@ -76,36 +74,44 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
           </h1>
         </div>
       ) : (
-        <Container>
+        <Container className="mt-4">
           <Row>
             {tokenIds?.map((token, i) => (
               <Col sm={6} lg={4} xl={3} key={i}>
-                <div className="dark:bg-nft-black-3 bg-white rounded-2xl p-4 sm:my-2 shadow-md">
-                  <div className="relative w-full rounded-2xl overflow-hidden">
-                    <img src={nfts[token].icon ? nfts[token].icon : nftPlaceholder} alt="" />
-                  </div>
-                  <div className="mt-3 flex flex-col">
-                    <div className="flex flex-row align-items-center">
-                      <a
-                        className="font-poppins text-nft-black-1 text-sm"
-                        href={`https://explorer.testnet.near.org/accounts/${nfts[token].contractId}`}
-                        target="_blank"
-                      >
-                        {trimName(nfts[token].contractId, 12, 12, 28)}
-                      </a>
-                      <img className="ml-2" src={nfts[token].nftIcon} style={{ maxWidth: '20px' }} alt="" />
+                <Link to={`/collection/${id}/${token}`}>
+                  <div className="dark:bg-nft-black-3 bg-white rounded-2xl p-4 sm:my-2 shadow-md">
+                    <div className="relative w-full rounded-2xl overflow-hidden">
+                      <img src={nfts[token].icon ? nfts[token].icon : nftPlaceholder} alt="" />
                     </div>
-                    <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-md mt-2">
-                      <span className="text-nft-gray-2">#{nfts[token].tokenId}</span> {nfts[token].metadata.title}
-                    </p>
-                    <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm mt-2">
-                      <span className="text-nft-gray-2">
-                        {collection?.spot_price ? nearTo(collection?.spot_price) : '--'}{' '}
-                      </span>
-                      NEAR
-                    </p>
+                    <div className="mt-3 flex flex-col">
+                      <div className="flex flex-row align-items-center">
+                        <a
+                          className="font-poppins text-nft-black-1 text-sm"
+                          href={`https://explorer.testnet.near.org/accounts/${nfts[token].contractId}`}
+                          target="_blank"
+                        >
+                          {trimName(nfts[token].contractId, 12, 12, 28)}
+                        </a>
+                        <img
+                          className="ml-2"
+                          src={nfts[token].nftIcon ? nfts[token].nftIcon : nftPlaceholder}
+                          style={{ maxWidth: '20px' }}
+                          alt=""
+                        />
+                      </div>
+                      <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-md mt-2">
+                        <span className="text-nft-gray-2">#{nfts[token].tokenId}</span>{' '}
+                        {nfts[token].metadata.title ? nfts[token].metadata.title : 'No name'}
+                      </p>
+                      <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm mt-2">
+                        <span className="text-nft-gray-2">
+                          {collection?.spot_price ? nearTo(collection?.spot_price) : '--'}{' '}
+                        </span>
+                        NEAR
+                      </p>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </Col>
             ))}
           </Row>

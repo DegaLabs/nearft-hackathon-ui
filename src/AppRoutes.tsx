@@ -21,6 +21,7 @@ import PoolDetail from './pages/PoolDetail'
 import { CONTRACT_ID } from './constants'
 // @ts-ignore
 import NearFTSDK from 'nearft-sdk'
+import PoolNFTItem from './pages/PoolNFTItem'
 
 const listNFT = [
   {
@@ -155,8 +156,7 @@ const AppRoutes: React.FC = () => {
   const { selector, modal, accounts, accountId } = useWalletSelector()
   const [account, setAccount] = useState<IAccount | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
-  const [collections, setCollections] = useState<IPool[]>()
-  // const [price, setPrice] = useState<string>()
+  const [collections, setCollections] = useState<IPool[] | undefined>()
 
   const getAccount = useCallback(async (): Promise<IAccount | null> => {
     if (!accountId) {
@@ -223,8 +223,6 @@ const AppRoutes: React.FC = () => {
     const getCollections = async () => {
       const _collections = await NearFTSDK.getPools('testnet', CONTRACT_ID)
       setCollections(_collections)
-      // setPrice(_collections)
-      console.log('_collections', _collections)
     }
     getCollections()
   }, [])
@@ -277,6 +275,7 @@ const AppRoutes: React.FC = () => {
         {/*
         // @ts-ignore */}
         <Route path="/collection/:id" element={<PoolDetail collections={collections} />} />
+        <Route path="/collection/:id/:detail" element={<PoolNFTItem account={account} collections={collections} />} />
         <Route path="/pool" element={<YourPools collections={collections} />} />
         <Route path="/create" element={<CreatePool />} />
         <Route path="/content" element={<Content />} />
