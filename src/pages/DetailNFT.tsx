@@ -22,6 +22,7 @@ interface IDetailNFTProps {
 
 const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
   const [nft, setNFT] = useState<any>()
+  const [isDeposited, setDeposited] = useState<boolean>(false)
   const [empty, setEmpty] = useState<boolean>(false)
   const [isLoading, setLoading] = useState<boolean>(true)
   const [isSelling, setSelling] = useState<boolean>(false)
@@ -61,6 +62,9 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
     const getListNFTs = async () => {
       if (nftContract && id) {
         const _NFT = await NearFTSDK.getMetadataOfNFT('testnet', nftContract, id)
+        const isDepositedBy = await NearFTSDK.isTokenDepositedBy("testnet", CONTRACT_ID, nftContract, accountId, id)
+        console.log('isDepositedBy', isDepositedBy, CONTRACT_ID, nftContract, accountId, id)
+        setDeposited(isDepositedBy)
         if (!_NFT) {
           setEmpty(true)
         } else {
@@ -82,7 +86,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
         </h2>
       </div>
     )
-
+  console.log('nft', nft)
   return (
     <div className="max-w-5xl m-auto">
       <Container>
@@ -143,7 +147,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
               )}
 
               <div className="flex flex-row sm:flex-col mt-10">
-                {account?.account_id === nft?.ownerId && (
+                { (account?.account_id === nft?.ownerId || isDeposited) && (
                   <Button
                     btnName={`Sell #${nft?.tokenId}`}
                     classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
