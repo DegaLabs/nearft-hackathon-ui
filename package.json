@@ -7,6 +7,7 @@
     "@near-wallet-selector/modal-ui": "^6.0.1",
     "@near-wallet-selector/my-near-wallet": "^6.0.1",
     "@near-wallet-selector/near-wallet": "^6.0.1",
+    "@near-wallet-selector/nearfi": "https://github.com/DegaLabs/wallet-selector-nearfi-prebuild.git",
     "@near-wallet-selector/sender": "^6.0.1",
     "@types/big.js": "^6.1.5",
     "@types/node": "^16.7.13",

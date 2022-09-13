@@ -7,6 +7,7 @@ import type { WalletSelectorModal } from '@near-wallet-selector/modal-ui'
 import { setupNearWallet } from '@near-wallet-selector/near-wallet'
 import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet'
 import { setupSender } from '@near-wallet-selector/sender'
+import { setupNearFi } from '@near-wallet-selector/nearfi'
 // import { setupNearFi } from "@near-wallet-selector/nearfi";
 import { CONTRACT_ID } from '../constants'
 
@@ -43,6 +44,7 @@ export const WalletSelectorContextProvider: React.FC<Props> = ({ children }) => 
         setupNearWallet(),
         setupMyNearWallet(),
         setupSender(),
+        setupNearFi()
         // setupNearFi(),
       ],
     })
