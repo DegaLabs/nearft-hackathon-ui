@@ -7,7 +7,6 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { useWalletSelector } from '../contexts/WalletSelectorContext'
 import { toNear } from '../utils/amount'
 import Select from 'react-select'
-import Button from '../components/Button'
 
 interface IFormInput {
   pool_type: string
@@ -30,8 +29,9 @@ const CreatePool = () => {
 
   console.log('nfts', nfts)
 
+  console.log('selectedOption', selectedOption)
+
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log(data)
     const spotPrice = toNear(data.spot_price)
     const _delta =
       data.bonding_curve === '0'
@@ -47,6 +47,14 @@ const CreatePool = () => {
     const depositAmount = Big(data.deposit_amount)
       .times(10 ** 24)
       .toFixed()
+
+    let tokenIds = []
+
+    for (const e of selectedOption) {
+      tokenIds.push(e.value)
+    }
+
+    console.log('tokenIds', tokenIds)
     //awa NearFTSDK.createPair(walletSelector-, networkId-, contractId-, accountId-, poolType-, bondingCurve-, spotPrice-, delta-, fee-, assetRecipient-, initialTokenIds, lookTil, depositAmount)
     await NearFTSDK.createPair(
       selector,
@@ -59,7 +67,7 @@ const CreatePool = () => {
       _delta,
       _fee,
       accountId,
-      ['1', '2'],
+      tokenIds,
       0,
       depositAmount,
     )
@@ -169,7 +177,13 @@ const CreatePool = () => {
 
               <div className="flex flex-col mb-2.5">
                 <label className="mb-1 font-poppins font-medium text-nft-gray-2">Select NFTs</label>
-                <Select isMulti defaultValue={selectedOption} onChange={setSelectedOption} options={showList} />
+                <Select
+                  isMulti
+                  value={selectedOption}
+                  defaultValue={selectedOption}
+                  onChange={setSelectedOption}
+                  options={showList}
+                />
               </div>
 
               <input
