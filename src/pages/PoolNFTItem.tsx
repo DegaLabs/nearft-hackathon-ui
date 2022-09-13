@@ -56,6 +56,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
     walletSelector,
     accountId,
   ) => {
+    console.log("walletSelector", await walletSelector.wallet())
     const _buyInfo = await NearFTSDK.buyNFT(
       networkId,
       ammContractId,
@@ -152,7 +153,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                         CONTRACT_ID,
                         collections,
                         collection?.nft_token,
-                        collection?.pool_token_ids,
+                        [nft?.tokenId],
                         0.1,
                         selector,
                         accountId,
