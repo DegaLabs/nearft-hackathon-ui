@@ -88,7 +88,8 @@ const YourNFTs = ({ account }) => {
                         <img className="ml-2" src={e.nftIcon} style={{ maxWidth: '20px' }} alt="" />
                       </div>
                       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-md mt-2">
-                        <span className="text-nft-gray-2">#{e?.tokenId}</span> {e?.metadata.title}
+                        <span className="text-nft-gray-2">#{e?.tokenId}</span>{' '}
+                        {e?.metadata.title ? trimName(e?.metadata.title, 12, 10, 25) : 'No name'}
                       </p>
                       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm mt-2">
                         <span className="text-nft-gray-2">{e.price ? nearTo(e.price) : '--'} </span>

@@ -44,19 +44,18 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
     <div className="w-full flex justify-start items-center flex-col min-h-screen mb-20">
       <div className="w-full flexCenter flex-col">
         <Banner
-          name={collection?.nft_token}
           childStyles="text-center mb-4 text-white"
           parentStyles="h-80 justify-center"
         />
 
-        <div className="flexCenter flex-col -mt-32 z-0">
+        <div className="flexCenter flex-col -mt-48 z-0">
           <a
-            className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl mt-6"
+            className="font-poppins text-white hover:text-white font-semibold text-2xl mt-6"
             href={`https://explorer.testnet.near.org/accounts/${collection?.nft_token}`}
             target="_blank"
             rel="noreferrer"
           >
-            {collection?.nft_token}
+            {trimName(collection?.nft_token, 10, 12, 30)}
           </a>
         </div>
       </div>
@@ -71,7 +70,7 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
           </h1>
         </div>
       ) : (
-        <Container className="mt-20">
+        <Container className="mt-44">
           <Row>
             {tokenIds?.map((token, i) => (
               <Col sm={6} lg={4} xl={3} key={i} className="mb-4">
@@ -99,7 +98,7 @@ const PoolDetail = (props: PoolDetailProps): JSX.Element => {
                       </div>
                       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-md mt-2">
                         <span className="text-nft-gray-2">#{nfts[token]?.tokenId}</span>{' '}
-                        {nfts[token]?.metadata.title ? nfts[token]?.metadata.title : 'No name'}
+                        {nfts[token]?.metadata.title ? trimName(nfts[token]?.metadata.title, 12, 10, 25) : 'No name'}
                       </p>
                       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm mt-2">
                         <span className="text-nft-gray-2">
