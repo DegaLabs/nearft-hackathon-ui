@@ -27,12 +27,6 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
   const { id, detail } = useParams()
   const { selector, accountId } = useWalletSelector()
 
-  console.log('nft', nft)
-
-  console.log('collections', collections)
-
-  console.log('collection', collection)
-
   useEffect(() => {
     if (collections && id && detail) {
       const _collection = collections.filter((collection) => collection.pool_id === Number(id))

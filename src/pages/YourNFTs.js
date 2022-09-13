@@ -14,6 +14,8 @@ const YourNFTs = ({ account }) => {
   const [nfts, setNFTs] = useState([])
   const [loading, setLoading] = useState(true)
 
+  console.log('nfts', nfts)
+
   useEffect(() => {
     const getListNFTs = async () => {
       if (account) {
@@ -74,7 +76,7 @@ const YourNFTs = ({ account }) => {
           <Row>
             {nfts?.map((e, i) => (
               <Col sm={6} lg={4} xl={3} key={i}>
-                <Link to={`/inventory/${e.tokenId}`} state={e}>
+                <Link to={`/nft/${e.contractId}/${e.tokenId}`}>
                   <div className="dark:bg-nft-black-3 bg-white rounded-2xl p-4 sm:my-2 shadow-md">
                     <div className="relative w-full rounded-2xl overflow-hidden">
                       <img src={e.icon ? e.icon : nftPlaceholder} alt={e?.metadata.title} />

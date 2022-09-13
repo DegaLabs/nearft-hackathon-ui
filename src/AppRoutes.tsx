@@ -281,7 +281,7 @@ const AppRoutes: React.FC = () => {
         <Route path="/create" element={<CreatePool />} />
         <Route path="/content" element={<Content />} />
         <Route path="/inventory" element={<YourNFTs account={accountId} />} />
-        <Route path="/inventory/:id" element={<DetailNFT account={account} />} />
+        <Route path="/nft/:nftContract/:id" element={<DetailNFT account={account} />} />
       </Routes>
     </BrowserRouter>
   )
