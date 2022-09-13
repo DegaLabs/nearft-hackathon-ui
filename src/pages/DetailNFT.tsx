@@ -9,17 +9,18 @@ import NearFTSDK from 'nearft-sdk'
 import Button from '../components/Button'
 import nftPlaceholder from '../assets/nft1.png'
 import Loader from '../components/Loader'
-import { IAccount } from '../interfaces'
+import { IAccount, IPool } from '../interfaces'
 import { Col, Container, Row } from 'react-bootstrap'
 import { trimName } from '../utils/utils'
 import { CONTRACT_ID } from '../constants'
-import {useWalletSelector} from '../contexts/WalletSelectorContext'
+import { useWalletSelector } from '../contexts/WalletSelectorContext'
 
 interface IDetailNFTProps {
   account: IAccount | null
+  collections: Array<IPool> | undefined
 }
 
-const DetailNFT: React.FC<IDetailNFTProps> = ({ account }) => {
+const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
   const [nft, setNFT] = useState<any>()
   const [empty, setEmpty] = useState<boolean>(false)
   const [isLoading, setLoading] = useState<boolean>(true)
@@ -145,16 +146,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account }) => {
                     classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
                     // handleClick={() => console.log('hehe')}
                     handleClick={() =>
-                      onSell(
-                        'testnet',
-                        CONTRACT_ID,
-                        ['1'],
-                        nft?.contractId,
-                        nft?.tokenId,
-                        0.1,
-                        selector,
-                        accountId
-                      )
+                      onSell('testnet', CONTRACT_ID, collections, nft?.contractId, nft?.tokenId, 0.1, selector, accountId)
                     }
                   />
                 )}
