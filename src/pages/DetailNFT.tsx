@@ -14,6 +14,8 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { trimName } from '../utils/utils'
 import { CONTRACT_ID } from '../constants'
 import { useWalletSelector } from '../contexts/WalletSelectorContext'
+import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom'
 
 interface IDetailNFTProps {
   account: IAccount | null
@@ -26,6 +28,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
   const [empty, setEmpty] = useState<boolean>(false)
   const [isLoading, setLoading] = useState<boolean>(true)
   const [isSelling, setSelling] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   const { id, nftContract } = useParams()
   const { selector, accountId } = useWalletSelector()
@@ -44,25 +47,30 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
     accountId,
   ) => {
     setSelling(true)
-    const _buyInfo = await NearFTSDK.sellNFT(
-      networkId,
-      ammContractId,
-      pools,
-      nftContractId,
-      tokenIds,
-      slippage,
-      walletSelector,
-      accountId,
-    )
+    try {
+      await NearFTSDK.sellNFT(
+        networkId,
+        ammContractId,
+        pools,
+        nftContractId,
+        tokenIds,
+        slippage,
+        walletSelector,
+        accountId,
+      )
+      navigate("/inventory")
+    } catch (e) {
+      // eslint-disable-next-line no-useless-concat
+      swal("Oops!", "Something went wrong!" + "\n" + e.toString(), "error");
+    }
     setSelling(false)
-    console.log('_buyInfo', _buyInfo)
   }
 
   useEffect(() => {
     const getListNFTs = async () => {
       if (nftContract && id) {
         const _NFT = await NearFTSDK.getMetadataOfNFT('testnet', nftContract, id)
-        const isDepositedBy = await NearFTSDK.isTokenDepositedBy("testnet", CONTRACT_ID, nftContract, accountId, id)
+        const isDepositedBy = await NearFTSDK.isTokenDepositedBy('testnet', CONTRACT_ID, nftContract, accountId, id)
         console.log('isDepositedBy', isDepositedBy, CONTRACT_ID, nftContract, accountId, id)
         setDeposited(isDepositedBy)
         if (!_NFT) {
@@ -147,14 +155,23 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
               )}
 
               <div className="flex flex-row sm:flex-col mt-10">
-                { (account?.account_id === nft?.ownerId || isDeposited) && (
+                {(account?.account_id === nft?.ownerId || isDeposited) && (
                   <Button
                     btnName={`Sell #${nft?.tokenId}`}
                     classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
                     loading={isSelling}
                     // handleClick={() => console.log('hehe')}
                     handleClick={() =>
-                      onSell('testnet', CONTRACT_ID, collections, nft?.contractId, nft?.tokenId, 0.1, selector, accountId)
+                      onSell(
+                        'testnet',
+                        CONTRACT_ID,
+                        collections,
+                        nft?.contractId,
+                        nft?.tokenId,
+                        0.1,
+                        selector,
+                        accountId,
+                      )
                     }
                   />
                 )}

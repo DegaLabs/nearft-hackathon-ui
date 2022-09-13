@@ -13,6 +13,8 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { trimName } from '../utils/utils'
 import { CONTRACT_ID } from '../constants'
 import { useWalletSelector } from '../contexts/WalletSelectorContext'
+import swal from 'sweetalert'
+import { useNavigate } from 'react-router-dom'
 
 interface IPoolNFTItemProps {
   collections: Array<IPool> | undefined
@@ -24,7 +26,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
   const [collection, setCollection] = useState<IPool | undefined>()
   const [isLoading, setLoading] = useState<boolean>(true)
   const [isBuying, setBuying] = useState<boolean>(false)
-
+  const navigate = useNavigate()
   const { id, detail } = useParams()
   const { selector, accountId } = useWalletSelector()
 
@@ -52,18 +54,14 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
     accountId,
   ) => {
     setBuying(true)
-    const _buyInfo = await NearFTSDK.buyNFT(
-      networkId,
-      ammContractId,
-      pools,
-      nftContractId,
-      tokenIds,
-      slippage,
-      walletSelector,
-      accountId,
-    )
-    setBuying(false)
-    console.log('_buyInfo', _buyInfo)
+    NearFTSDK.buyNFT(networkId, ammContractId, pools, nftContractId, tokenIds, slippage, walletSelector, accountId)
+      .then(() => {
+        navigate('/inventory')
+      })
+      .catch((e) => {
+        swal('Oops!', 'Something went wrong!' + '\n' + e.toString(), 'error')
+        setBuying(false)
+      })
   }
 
   if (isLoading) return <Loader />
