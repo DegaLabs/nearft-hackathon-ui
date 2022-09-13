@@ -157,6 +157,7 @@ const AppRoutes: React.FC = () => {
   const [account, setAccount] = useState<IAccount | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const [collections, setCollections] = useState<IPool[] | undefined>()
+  const [expanded, setExpanded] = useState(false)
 
   const getAccount = useCallback(async (): Promise<IAccount | null> => {
     if (!accountId) {
@@ -230,18 +231,20 @@ const AppRoutes: React.FC = () => {
 
   return (
     <BrowserRouter>
-      <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expanded={expanded} expand="md" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand as={NavLink} to="/" className="mr-5">
             NearFT
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          {/*
+            // @ts-ignore */}
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setExpanded(expanded ? false : "expanded")} />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto ml-5">
-              <Nav.Link as={Link} to="/inventory">
+              <Nav.Link as={Link} to="/inventory" onClick={() => setExpanded(false)}>
                 Your NFTs
               </Nav.Link>
-              <Nav.Link as={Link} to="/pool">
+              <Nav.Link as={Link} to="/pool" onClick={() => setExpanded(false)}>
                 Your Pools
               </Nav.Link>
             </Nav>
