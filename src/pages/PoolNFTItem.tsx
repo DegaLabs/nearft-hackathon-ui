@@ -36,8 +36,13 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
       const _NFTs = _collection[0].poolTokenMetadata
       // @ts-ignore
       setCollection(collections[id])
-      // @ts-ignore
-      setNFT(_NFTs[detail])
+      console.log('_NFTs[detail])', _NFTs[detail], detail)
+      if (!_NFTs[detail]) {
+        setNFT({ tokenId: detail })
+      } else {
+        // @ts-ignore
+        setNFT(_NFTs[detail])
+      }
     }
     setLoading(false)
   }, [detail, id, collections])
@@ -75,7 +80,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
               <img
                 src={nft?.icon ? nft?.icon : nftPlaceholder}
                 className="rounded-xl shadow-lg"
-                alt={nft?.metadata.title}
+                alt={nft?.metadata?.title}
               />
             </div>
           </Col>
@@ -84,7 +89,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
               #{nft?.tokenId}
             </h2>
             <h2 className="mt-2 font-poppins dark:text-white text-nft-gray-3 font-semibold text-xl minlg:text-2xl">
-              {nft?.metadata.title ? nft?.metadata.title : 'No name'}
+              {nft?.metadata?.title ? nft?.metadata?.title : 'No name'}
             </h2>
             <div className="mt-2">
               <p className="font-poppins dark:text-white text-nft-black-1 text-xs minlg:text-base font-semibold">
@@ -92,7 +97,8 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                 <a
                   className="font-poppins text-nft-black-1 text-sm"
                   href={`https://explorer.testnet.near.org/accounts/${nft?.ownerId}`}
-                  target="_blank" rel="noreferrer"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   {trimName(nft?.ownerId, 12, 12, 28)}
                 </a>
@@ -104,13 +110,14 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                 <a
                   className="font-poppins text-nft-black-1 text-sm"
                   href={`https://explorer.testnet.near.org/accounts/${nft?.contractId}`}
-                  target="_blank" rel="noreferrer"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   {trimName(nft?.contractId, 12, 12, 28)}
                 </a>
               </div>
 
-              {nft?.metadata.description && (
+              {nft?.metadata?.description && (
                 <div className="mt-3 flex flex-col">
                   <div className="w-full border-b dark:border-nft-black-1 border-nft-gray-1 flex flex-row">
                     <p className="font-poppins dark:text-white text-nft-black-1 text-base minlg:text-base font-medium mb-2">
@@ -119,7 +126,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                   </div>
                   <div className="mt-3">
                     <p className="font-poppins dark:text-white text-nft-black-1 text-base font-normal">
-                      {nft?.metadata.description}
+                      {nft?.metadata?.description}
                     </p>
                   </div>
                 </div>
