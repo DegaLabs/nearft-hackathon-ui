@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { IPool } from '../interfaces'
 import CollectionTableRow from '../components/CollectionTableRow'
+import Banner from '../components/Banner'
 
 interface ICollectionsProps {
   collections: Array<IPool>
@@ -13,6 +14,15 @@ const Collections = (props: ICollectionsProps): JSX.Element => {
   return (
     <div className="flex justify-center sm:px-4 p-12">
       <Container>
+        <Banner
+          parentStyles="justify-start mb-6 h-72 sm:h-96 p-12 xs:p-4 xs:h-44 rounded-3xl"
+          childStyles="md:text-4xl sm:text-2xl xs:text-xl text-left text-white leading-loose"
+          name={
+            <>
+              The First AMM NFT Marketplace <br /> On Near Blockchain
+            </>
+          }
+        />
         <Row>
           <Col>
             <h2 className="font-poppins dark:text-white text-center text-nft-black-1 text-2xl minlg:text-4xl font-semibold sm:mb-4">

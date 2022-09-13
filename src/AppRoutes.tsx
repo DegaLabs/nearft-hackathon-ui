@@ -237,11 +237,6 @@ const AppRoutes: React.FC = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/collections">
-                Collections
-              </Nav.Link>
-            </Nav>
             <Nav>
               <Nav.Link as={Link} to="/inventory">
                 Your NFTs
@@ -269,10 +264,9 @@ const AppRoutes: React.FC = () => {
         </Container>
       </Navbar>
       <Routes>
-        <Route path="/" element={<Homepage />} />
         {/*
         // @ts-ignore */}
-        <Route path="/collections" element={<Collections collections={collections} />} />
+        <Route path="/" element={<Collections collections={collections} />} />
         {/*
         // @ts-ignore */}
         <Route path="/collection/:id" element={<PoolDetail collections={collections} />} />
