@@ -28,6 +28,7 @@
     "react-hook-form": "^7.35.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.4.0",
     "react-slick": "^0.29.0",
     "react-tooltip": "^4.2.21",
     "rxjs": "^7.5.6",
