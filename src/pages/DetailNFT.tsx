@@ -24,6 +24,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
   const [nft, setNFT] = useState<any>()
   const [empty, setEmpty] = useState<boolean>(false)
   const [isLoading, setLoading] = useState<boolean>(true)
+  const [isSelling, setSelling] = useState<boolean>(false)
 
   const { id, nftContract } = useParams()
   const { selector, accountId } = useWalletSelector()
@@ -41,6 +42,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
     walletSelector,
     accountId,
   ) => {
+    setSelling(true)
     const _buyInfo = await NearFTSDK.sellNFT(
       networkId,
       ammContractId,
@@ -51,6 +53,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
       walletSelector,
       accountId,
     )
+    setSelling(false)
     console.log('_buyInfo', _buyInfo)
   }
 
@@ -144,6 +147,7 @@ const DetailNFT: React.FC<IDetailNFTProps> = ({ account, collections }) => {
                   <Button
                     btnName={`Sell #${nft?.tokenId}`}
                     classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                    loading={isSelling}
                     // handleClick={() => console.log('hehe')}
                     handleClick={() =>
                       onSell('testnet', CONTRACT_ID, collections, nft?.contractId, nft?.tokenId, 0.1, selector, accountId)

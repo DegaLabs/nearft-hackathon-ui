@@ -23,6 +23,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
   const [nft, setNFT] = useState<any>()
   const [collection, setCollection] = useState<IPool | undefined>()
   const [isLoading, setLoading] = useState<boolean>(true)
+  const [isBuying, setBuying] = useState<boolean>(false)
 
   const { id, detail } = useParams()
   const { selector, accountId } = useWalletSelector()
@@ -50,7 +51,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
     walletSelector,
     accountId,
   ) => {
-    console.log("walletSelector", await walletSelector.wallet())
+    setBuying(true)
     const _buyInfo = await NearFTSDK.buyNFT(
       networkId,
       ammContractId,
@@ -61,6 +62,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
       walletSelector,
       accountId,
     )
+    setBuying(false)
     console.log('_buyInfo', _buyInfo)
   }
 
@@ -140,6 +142,7 @@ const PoolNFTItem: React.FC<IPoolNFTItemProps> = ({ collections, account }) => {
                   <Button
                     btnName={`Buy for #${nft?.tokenId}`}
                     classStyles="mr-5 sm:mr-0 sm:mb-5 rounded-xl"
+                    loading={isBuying}
                     // handleClick={() => console.log('hehe')}
                     handleClick={() =>
                       onBuy(
