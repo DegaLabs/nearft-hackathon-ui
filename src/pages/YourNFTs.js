@@ -6,7 +6,8 @@ import Banner from '../components/Banner'
 import creatorImg from '../assets/creator1.png'
 import { Col, Row } from 'react-bootstrap'
 import nftPlaceholder from '../assets/nft1.png'
-import {trimName} from "../utils/utils";
+import { trimName } from '../utils/utils'
+import { nearTo } from '../utils/amount'
 
 const YourNFTs = ({ account }) => {
   const [nfts, setNFTs] = useState([])
@@ -86,7 +87,7 @@ const YourNFTs = ({ account }) => {
                       <span className="text-nft-gray-2">#{e?.tokenId}</span> {e?.metadata.title}
                     </p>
                     <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-sm mt-2">
-                      <span className="text-nft-gray-2">{e.price ? e.price : '--'} </span>
+                      <span className="text-nft-gray-2">{e.price ? nearTo(e.price) : '--'} </span>
                       NEAR
                     </p>
                   </div>

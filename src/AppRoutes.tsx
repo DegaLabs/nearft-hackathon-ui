@@ -156,6 +156,7 @@ const AppRoutes: React.FC = () => {
   const [account, setAccount] = useState<IAccount | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const [collections, setCollections] = useState<IPool[]>()
+  // const [price, setPrice] = useState<string>()
 
   const getAccount = useCallback(async (): Promise<IAccount | null> => {
     if (!accountId) {
@@ -222,7 +223,8 @@ const AppRoutes: React.FC = () => {
     const getCollections = async () => {
       const _collections = await NearFTSDK.getPools('testnet', CONTRACT_ID)
       setCollections(_collections)
-      // console.log('_collections', _collections)
+      // setPrice(_collections)
+      console.log('_collections', _collections)
     }
     getCollections()
   }, [])
