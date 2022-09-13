@@ -19,7 +19,7 @@ const Collections = (props: ICollectionsProps): JSX.Element => {
           childStyles="md:text-4xl sm:text-2xl xs:text-xl text-left text-white leading-loose"
           name={
             <>
-              the decentralized <br /> NFT marketplace
+              The First AMM NFT Marketplace <br /> On Near Blockchain
             </>
           }
         />
