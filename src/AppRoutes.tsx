@@ -22,6 +22,8 @@ import { CONTRACT_ID } from './constants'
 // @ts-ignore
 import NearFTSDK from 'nearft-sdk'
 import PoolNFTItem from './pages/PoolNFTItem'
+import logo from './assets/NearFT.png'
+import nftPlaceholder from './assets/nft1.png'
 
 const listNFT = [
   {
@@ -220,6 +222,11 @@ const AppRoutes: React.FC = () => {
     })
   }, [accountId, getAccount])
 
+  const navToggle = () => {
+    // @ts-ignore
+    setExpanded(expanded ? false : 'expanded')
+  }
+
   useEffect(() => {
     const getCollections = async () => {
       const _collections = await NearFTSDK.getPools('testnet', CONTRACT_ID)
@@ -234,11 +241,14 @@ const AppRoutes: React.FC = () => {
       <Navbar collapseOnSelect expanded={expanded} expand="md" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand as={NavLink} to="/" className="mr-5">
-            NearFT
+            <img src={logo} alt="NearFT" style={{ maxWidth: 150 }} />
           </Navbar.Brand>
           {/*
             // @ts-ignore */}
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setExpanded(expanded ? false : "expanded")} />
+          <Navbar.Toggle
+            aria-controls="responsive-navbar-nav"
+            onClick={() => navToggle()}
+          />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto ml-5">
               <Nav.Link as={Link} to="/inventory" onClick={() => setExpanded(false)}>
